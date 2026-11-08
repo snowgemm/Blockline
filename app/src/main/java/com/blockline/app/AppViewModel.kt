@@ -21,6 +21,7 @@ import com.blockline.app.data.OperationLogRepository
 import com.blockline.app.data.AppUpdate
 import com.blockline.app.data.AppUpdateRepository
 import com.blockline.app.data.InAppUpdateInstaller
+import com.blockline.app.data.UpdateApkPolicy
 import com.blockline.app.data.UpdateDownloadState
 import com.blockline.app.data.ResourcePreview
 import com.blockline.app.data.ResourcePreviewBuilder
