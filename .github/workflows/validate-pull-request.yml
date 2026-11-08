@@ -58,6 +58,9 @@ jobs:
       - name: Build debug APK
         run: gradle assembleDebug --stacktrace --no-daemon
 
+      - name: Build Macrobenchmark APKs
+        run: gradle :macrobenchmark:assembleBenchmark --stacktrace --no-daemon
+
       - name: Upload debug APK for device testing
         uses: actions/upload-artifact@v6
         with:
