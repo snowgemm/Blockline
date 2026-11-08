@@ -50,6 +50,16 @@ android {
             resValue("string", "app_name", "Blockline Test")
             buildConfigField("String", "UPDATE_CHANNEL", "\"test\"")
         }
+        create("benchmark") {
+            initWith(getByName("release"))
+            applicationIdSuffix = ".benchmark"
+            signingConfig = signingConfigs.getByName("debug")
+            versionNameSuffix = "-benchmark"
+            isDebuggable = false
+            isMinifyEnabled = false
+            resValue("string", "app_name", "Blockline Benchmark")
+            buildConfigField("String", "UPDATE_CHANNEL", "\"disabled\"")
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -90,5 +100,6 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended")
 
     testImplementation("junit:junit:4.13.2")
+    benchmarkImplementation("androidx.profileinstaller:profileinstaller:1.4.1")
     testImplementation("org.json:json:20240303")
 }
