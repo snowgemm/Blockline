@@ -21,6 +21,7 @@ import com.blockline.app.data.OperationLogRepository
 import com.blockline.app.data.AppUpdate
 import com.blockline.app.data.AppUpdateRepository
 import com.blockline.app.data.InAppUpdateInstaller
+import com.blockline.app.data.UpdateApkPolicy
 import com.blockline.app.data.UpdateDownloadState
 import com.blockline.app.data.ResourcePreview
 import com.blockline.app.data.ResourcePreviewBuilder
@@ -462,6 +463,19 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         if (updateDownloadState != UpdateDownloadState.DOWNLOADING && updateDownloadJob?.isActive != true) return
         updateDownloadState = UpdateDownloadState.CANCELLED
         updateDownloadJob?.cancel()
+    }
+
+    fun onUpdateInstallerReturned() {
+        if (updateDownloadState != UpdateDownloadState.INSTALLING) return
+
+        val cachedApkExists = updateDownloadVersion?.let { version ->
+            InAppUpdateInstaller.cachedFile(getApplication(), version) != null
+        } == true
+        updateDownloadState = UpdateApkPolicy.stateAfterInstallerReturns(
+            currentState = updateDownloadState,
+            cachedApkExists = cachedApkExists
+        )
+        updateDownloadError = if (cachedApkExists) null else text(R.string.update_download_missing)
     }
 
     fun installDownloadedUpdate(context: android.content.Context) {
