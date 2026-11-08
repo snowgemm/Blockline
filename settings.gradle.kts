@@ -14,3 +14,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Blockline"
 include(":app")
+include(":macrobenchmark")
