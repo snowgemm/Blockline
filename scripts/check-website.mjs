@@ -18,6 +18,20 @@ for (const file of ["README.md", "README.vi.md"]) {
 const css = read("assets/css/style.css");
 const js = read("assets/js/main.js");
 const favicon = read("favicon.svg");
+function channel(hex, offset) {
+  const value = parseInt(hex.slice(offset, offset + 2), 16) / 255;
+  return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+}
+function luminance(hex) {
+  return 0.2126 * channel(hex, 1) + 0.7152 * channel(hex, 3) + 0.0722 * channel(hex, 5);
+}
+function contrastRatio(foreground, background) {
+  const values = [luminance(foreground), luminance(background)].sort((a, b) => b - a);
+  return (values[0] + 0.05) / (values[1] + 0.05);
+}
+const lightTextTokens = css.match(/:root\\[data-theme="light"\\]\\{[^}]*--page:(#[0-9a-f]{6});[^}]*--subtle:(#[0-9a-f]{6});/i);
+assert(Boolean(lightTextTokens) && contrastRatio(lightTextTokens[2], lightTextTokens[1]) >= 4.5, "Light-theme subtle text meets WCAG AA contrast for normal text");
+
 assert(/<html lang="vi">/.test(html), "HTML declares Vietnamese language");
 assert(/<h1\b/.test(html) && (html.match(/<h1\b/g) || []).length === 1, "Page has exactly one h1");
 assert(/name="description"/.test(html) && /property="og:title"/.test(html), "SEO and Open Graph metadata exist");
