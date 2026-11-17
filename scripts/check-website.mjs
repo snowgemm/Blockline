@@ -39,7 +39,7 @@ assert(/assets\/css\/style\.css/.test(html) && /assets\/js\/main\.js/.test(html)
 assert(!/gradient\s*\(|color-mix\s*\(/i.test(css), "Website uses flat colors without gradients or blended overlays");
 assert(!/@keyframes\s+|animation\s*:\s*[^;{}]+;/i.test(css), "CSS has no decorative animations");
 assert(!/\.download-panel::after|\.reveal\s*\{|html\.reveal-ready/.test(css), "Decorative diagonal overlays and scroll-reveal styles are absent");
-assert(/style\.css\?v=20261118-monochrome-motion/.test(html) && /main\.js\?v=20261118-monochrome-motion/.test(html), "Changed asset URLs bypass stale browser caches");
+assert(/style\.css\?v=20261118-monochrome-motion-contrast/.test(html) && /main\.js\?v=20261118-monochrome-motion/.test(html), "Changed asset URLs bypass stale browser caches");
 assert(!/fonts\.(?:googleapis|gstatic)\.com/.test(html), "Website uses local system fonts rather than decorative remote fonts");
 assert(/href="https:\/\/github\.com\/snowgemm\/Blockline\/releases\/latest"/.test(html), "Latest release page link uses the canonical repository");
 assert(/property="og:url" content="https:\/\/snowgemm\.github\.io\/Blockline\//.test(html) && /rel="canonical" href="https:\/\/snowgemm\.github\.io\/Blockline\//.test(html), "Canonical and Open Graph URLs use the new GitHub Pages owner");
