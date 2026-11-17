@@ -125,7 +125,7 @@ h1,h2,h3,h4{font-family:var(--display)}
 .hero::before{content:"";position:absolute;z-index:-2;top:0;bottom:0;left:50%;width:100vw;transform:translateX(-50%);background-image:url("../images/deep-space-hero.webp");background-position:61% 45%;background-size:cover;background-repeat:no-repeat;filter:none;opacity:.78;pointer-events:none}
 .hero::after{content:"";position:absolute;z-index:-1;inset:0 auto 0 50%;width:100vw;transform:translateX(-50%);background-color:rgba(12,20,36,.42);pointer-events:none}
 :root[data-theme="light"] .hero::before{opacity:.54}
-:root[data-theme="light"] .hero::after{background-color:rgba(243,245,250,.52)}
+:root[data-theme="light"] .hero::after{background-color:rgba(242,246,252,.52)}
 .hero-copy{max-width:650px;padding-block:12px}
 .release-note{display:inline-flex;align-items:center;gap:9px;min-height:34px;padding:6px 11px;border:1px solid var(--line-strong);border-radius:7px;background:rgba(24,25,28,.94);color:var(--muted);font-size:.76rem;font-weight:600;transition:border-color .16s ease,color .16s ease}
 .release-note:hover{border-color:var(--accent);color:var(--text)}
@@ -412,7 +412,7 @@ h1 span{display:inline-block;margin-top:5px;color:var(--accent)}
   .menu-toggle{display:grid}
   .hero{min-height:0;grid-template-columns:1fr;gap:30px;padding-top:calc(103px + env(safe-area-inset-top));padding-bottom:62px}
   .hero::before{background-position:70% 42%;opacity:.82}
-  .hero::after{background-color:rgba(13,19,32,.48)}
+  .hero::after{background-color:rgba(12,20,36,.44)}
   :root[data-theme="light"] .hero::before{opacity:.62}
   .hero-copy{max-width:700px}
   .hero-visual{justify-self:center;max-width:460px}
