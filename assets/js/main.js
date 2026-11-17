@@ -264,7 +264,7 @@
       button.setAttribute('aria-label', currentLanguage === 'en' ? (next === 'light' ? 'Switch to dark theme' : 'Switch to light theme') : (next === 'light' ? 'Chuyển sang giao diện tối' : 'Chuyển sang giao diện sáng'));
     });
     const themeMeta = document.querySelector('meta[name="theme-color"]');
-    if (themeMeta) themeMeta.content = next === 'light' ? '#f3f5f8' : '#080b12';
+    if (themeMeta) themeMeta.content = next === 'light' ? '#f5f5f3' : '#101114';
     syncLocalizedControls();
   };
 
@@ -327,7 +327,7 @@
       if (menuIsOpen) return;
       menu.inert = true;
       menu.setAttribute('aria-hidden', 'true');
-    }, reducedMotion.matches ? 0 : 320);
+    }, reducedMotion.matches ? 0 : 220);
     if (restoreFocus) menuToggle.focus();
     else if (previousFocus instanceof HTMLElement && previousFocus.isConnected) previousFocus.focus({ preventScroll: true });
   };
@@ -444,10 +444,11 @@
     if (demoPanel) demoPanel.setAttribute('aria-labelledby', selected.id);
     if (demoLabel) demoLabel.textContent = demoLabels[key] ? demoLabels[key][currentLanguage === 'en' ? 1 : 0] : 'BLOCKLINE / DEMO';
     const activeContent = document.querySelector('[data-demo-content="' + key + '"]');
-    if (activeContent && !reducedMotion.matches) {
-      activeContent.style.animation = 'none';
-      void activeContent.offsetWidth;
-      activeContent.style.animation = '';
+    if (activeContent && !focus && !reducedMotion.matches && typeof activeContent.animate === 'function') {
+      activeContent.animate(
+        [{ opacity: 0, transform: 'translateY(5px)' }, { opacity: 1, transform: 'translateY(0)' }],
+        { duration: 180, easing: 'cubic-bezier(0.23, 1, 0.32, 1)' }
+      );
     }
     if (focus) selected.focus();
   };

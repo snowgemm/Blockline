@@ -25,7 +25,7 @@ assert(/assets\/css\/style\.css/.test(html) && /assets\/js\/main\.js/.test(html)
 assert(!/gradient\s*\(|color-mix\s*\(/i.test(css), "Website uses flat colors without gradients or blended overlays");
 assert(!/@keyframes\s+|animation\s*:\s*[^;{}]+;/i.test(css), "CSS has no decorative animations");
 assert(!/\.download-panel::after|\.reveal\s*\{|html\.reveal-ready/.test(css), "Decorative diagonal overlays and scroll-reveal styles are absent");
-assert(/style\.css\?v=20261118-cosmic-layout/.test(html) && /main\.js\?v=20261107-canonical-links/.test(html), "Changed asset URLs bypass stale browser caches");
+assert(/style\.css\?v=20261118-monochrome-motion/.test(html) && /main\.js\?v=20261118-monochrome-motion/.test(html), "Changed asset URLs bypass stale browser caches");
 assert(!/fonts\.(?:googleapis|gstatic)\.com/.test(html), "Website uses local system fonts rather than decorative remote fonts");
 assert(/href="https:\/\/github\.com\/snowgemm\/Blockline\/releases\/latest"/.test(html), "Latest release page link uses the canonical repository");
 assert(/property="og:url" content="https:\/\/snowgemm\.github\.io\/Blockline\//.test(html) && /rel="canonical" href="https:\/\/snowgemm\.github\.io\/Blockline\//.test(html), "Canonical and Open Graph URLs use the new GitHub Pages owner");
@@ -89,14 +89,20 @@ for (let i = 0; i < css.length; i++) {
   if (braces < 0) break;
 }
 assert(braces === 0 && quote === "" && !comment, "CSS braces, strings, and comments are balanced");
-assert(/name="theme-color" content="#080b12"/i.test(html) && js.includes("#f3f5f8") && js.includes("#080b12"), "Browser theme color matches the refined dark and light themes");
+assert(/name="theme-color" content="#101114"/i.test(html) && js.includes("#f5f5f3") && js.includes("#101114"), "Browser theme color matches the neutral dark and light themes");
 assert(/deep-space-hero\.webp/.test(css) && fs.existsSync(path.join(root, "assets/images/deep-space-hero.webp")), "The optimized Deep Space artwork asset exists");
 assert(/\.hero::before\s*\{[^}]*deep-space-hero\.webp/s.test(css) && !/body::before/.test(css), "Cosmic artwork is confined to the hero rather than fixed behind every section");
-assert(/--accent:#a6b5ff/i.test(css) && /--accent-cyan:#80bac7/i.test(css), "The restrained periwinkle and slate-cyan tokens are defined");
+assert(/--accent:#f1f1f2/i.test(css) && /--accent-cyan:#b9bbc1/i.test(css), "The monochrome accent tokens are defined");
+assert(!/#(?:a6b5ff|8e9ff0|80bac7|536bc6|3f55ab|377f8b|d7b47b|966b35)/i.test(css + favicon), "Previous blue, cyan, and gold accents are removed");
+assert(/filter:grayscale\(1\) saturate\(0\)/.test(css), "The cosmic hero artwork is rendered in monochrome");
+assert(/\.feature-row-editor \.feature-copy\{order:2\}/.test(css) && /\.feature-row-editor \.feature-visual\{order:1\}/.test(css), "The middle feature row alternates the visual layout");
+assert(/\.roadmap-list\{display:grid;gap:0/.test(css) && /\.roadmap-item\{[^}]*border:0;border-bottom:1px solid var\(--line\)/s.test(css), "The roadmap uses a flat hierarchy instead of repeated cards");
+assert(/activeContent\.animate\(/.test(js) && /!focus && !reducedMotion\.matches/.test(js), "The demo transition is brief, user-triggered, and disabled for reduced-motion and keyboard navigation");
+assert(/visibility:hidden;opacity:0;transform:translateY\(-8px\)/.test(css) && /\.mobile-menu\.is-open\{visibility:visible;opacity:1/.test(css), "Mobile navigation uses an accessible short drawer transition");
 assert(!/--green(?:-bright)?\s*:|var\(--green(?:-bright)?\)/i.test(css), "Legacy green theme tokens are fully removed");
 assert(!/#(?:478f5e|8bb991|3dba7a|8ce0b2|6dbb82|a5dfad|1a2a1e|8fd19b|8b9cff|c3a6ff|75d9e8)/i.test(css), "Previous green and over-saturated cosmic accents are absent");
 assert(!/\.manifesto\b/.test(html) && !/01 \/ CẤU TRÚC|02 \/ CHỈNH SỬA|03 \/ CẤU HÌNH PACK/.test(html), "Redundant manifesto block and decorative feature numbering are removed");
-assert(/#a6b5ff/i.test(favicon) && /#80bac7/i.test(favicon), "Favicon follows the refined Blockline palette");
+assert(/#f1f1f2/i.test(favicon) && /#adafb5/i.test(favicon), "Favicon follows the monochrome Blockline palette");
 if (errors.length) {
   console.error(`Website checks failed: ${errors.length} error(s)`);
   errors.forEach((error) => console.error("✗ " + error));
