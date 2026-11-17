@@ -93,6 +93,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -111,6 +114,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.style.TextOverflow
 import com.blockline.app.AppViewModel
+import com.blockline.app.BuildConfig
 import com.blockline.app.R
 import com.blockline.app.data.JsonTools
 import com.blockline.app.data.EditorIndentationPolicy
@@ -777,7 +781,9 @@ fun EditorScreen(vm: AppViewModel, onBack: () -> Unit) {
     }
 
     Scaffold(
-        modifier = Modifier.imePadding(),
+        modifier = Modifier.imePadding().semantics {
+            if (BuildConfig.BUILD_TYPE == "benchmark") testTagsAsResourceId = true
+        },
         topBar = {
             Column {
             TopAppBar(
@@ -1145,7 +1151,9 @@ fun EditorScreen(vm: AppViewModel, onBack: () -> Unit) {
                     Box(Modifier.weight(1f).fillMaxWidth().background(tokens.editorBackground)) {
                         if (editorValue.text.length > LIVE_TEXT_ANALYSIS_MAX_CHARS) {
                             AndroidView(
-                                modifier = Modifier.fillMaxSize(),
+                                modifier = Modifier.fillMaxSize().then(
+                                    if (BuildConfig.BUILD_TYPE == "benchmark") Modifier.testTag("blockline_editor_input") else Modifier
+                                ),
                                 factory = { viewContext ->
                                     EditText(viewContext).apply {
                                         largeEditText = this
@@ -1350,7 +1358,9 @@ fun EditorScreen(vm: AppViewModel, onBack: () -> Unit) {
                                     if (completionItems.isNotEmpty()) completionItems = emptyList()
                                 },
                                 readOnly = vm.isOpeningFile || vm.readOnly,
-                                modifier = Modifier.fillMaxSize().onPreviewKeyEvent { event ->
+                                modifier = Modifier.fillMaxSize()
+                                    .then(if (BuildConfig.BUILD_TYPE == "benchmark") Modifier.testTag("blockline_editor_input") else Modifier)
+                                    .onPreviewKeyEvent { event ->
                                     if (event.type == KeyEventType.KeyDown && event.key == Key.Tab &&
                                         !vm.isOpeningFile && !vm.readOnly
                                     ) {

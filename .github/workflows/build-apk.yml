@@ -113,6 +113,9 @@ jobs:
       - name: Run unit tests
         run: gradle testDebugUnitTest --stacktrace --no-daemon
 
+      - name: Build Macrobenchmark APKs
+        run: gradle :macrobenchmark:assembleBenchmark --stacktrace --no-daemon
+
       - name: Prepare stable signing key
         if: ${{ env.HAS_SIGNING_KEY == 'true' }}
         env:

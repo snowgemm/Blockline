@@ -1,5 +1,7 @@
 package com.blockline.app.ui
 
+import android.os.Build
+import android.os.Trace
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -175,6 +177,20 @@ internal class CheckpointedSyntaxDocument private constructor(
             source: String,
             language: Lang,
             checkpointStride: Int = DEFAULT_CHECKPOINT_STRIDE
+        ): CheckpointedSyntaxDocument {
+            val traceEnabled = Build.VERSION.SDK_INT >= 18
+            if (traceEnabled) Trace.beginSection("Blockline.SyntaxIndex")
+            return try {
+                buildUntraced(source, language, checkpointStride)
+            } finally {
+                if (traceEnabled) Trace.endSection()
+            }
+        }
+
+        private fun buildUntraced(
+            source: String,
+            language: Lang,
+            checkpointStride: Int
         ): CheckpointedSyntaxDocument {
             require(supports(language)) { "Checkpointed syntax is not supported for $language." }
             require(checkpointStride >= 256) { "Checkpoint stride is too small." }
