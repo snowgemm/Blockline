@@ -179,7 +179,8 @@ h1 span{display:inline-block;margin-top:5px;color:var(--accent)}
 .num{color:#b9bbc1}
 .str{color:#c8c9cc}
 .indent{margin-left:14px}
-.cursor{display:inline-block;width:1px;height:12px;margin-left:2px;vertical-align:middle;background:#f1f1f2}
+.cursor{display:inline-block;width:1px;height:12px;margin-left:2px;vertical-align:middle;background:#f1f1f2;animation:code-cursor-blink 1s steps(2,start) infinite}
+@keyframes code-cursor-blink{to{visibility:hidden}}
 .editor-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 12px;border-top:1px solid #29374b;color:#8e9cb2;font:550 .53rem var(--mono)}
 .editor-bottom>span:first-child{color:#c6c7cb}
 .status-dot{display:inline-block;width:5px;height:5px;margin-right:5px;border-radius:50%;background:#b9bbc1}
@@ -504,6 +505,7 @@ h1 span{display:inline-block;margin-top:5px;color:var(--accent)}
 }
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto}
+  .cursor{animation:none;visibility:visible}
   .skip-link,.site-header,.icon-button,.language-toggle,.button,.text-link,.tree-caret,.tree-item,.tree-file,.feature-visual,.resource-card,.roadmap-item,.demo-tabs button,.mobile-menu,.faq-list summary>span::before,.faq-list summary>span::after,#scroll-progress{transition:none}
   .button:active{transform:none}
 }
