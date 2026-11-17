@@ -29,7 +29,7 @@ function contrastRatio(foreground, background) {
   const values = [luminance(foreground), luminance(background)].sort((a, b) => b - a);
   return (values[0] + 0.05) / (values[1] + 0.05);
 }
-const lightTextTokens = css.match(/:root\\[data-theme="light"\\]\\{[^}]*--page:(#[0-9a-f]{6});[^}]*--subtle:(#[0-9a-f]{6});/i);
+const lightTextTokens = css.match(/:root\[data-theme="light"\]\{[^}]*--page:(#[0-9a-f]{6});[^}]*--subtle:(#[0-9a-f]{6});/i);
 assert(Boolean(lightTextTokens) && contrastRatio(lightTextTokens[2], lightTextTokens[1]) >= 4.5, "Light-theme subtle text meets WCAG AA contrast for normal text");
 
 assert(/<html lang="vi">/.test(html), "HTML declares Vietnamese language");
