@@ -32,14 +32,14 @@
     "01 — TỪ CẤU TRÚC ĐẾN BẢN XUẤT":"01 — FROM STRUCTURE TO EXPORT","Thiết kế cho quy trình làm pack trên Android":"Designed for Android pack workflows",
     "CÔNG CỤ THỰC DỤNG":"TOOLS THAT DO THE WORK","Tập trung vào phần việc":"Focus on the work","quan trọng nhất.":"that matters most.",
     "Không cần biến điện thoại thành máy tính. Blockline tập trung vào những thao tác thường gặp khi làm việc với pack.":"You shouldn’t need a desktop for everyday pack work. Blockline brings the essential tools to your Android device.",
-    "01 / CẤU TRÚC":"01 / STRUCTURE","Một pack. Rõ từng tệp.":"One pack. Every file, organized.",
+    "CẤU TRÚC":"STRUCTURE","Một pack. Rõ từng tệp.":"One pack. Every file, organized.",
     "Nhập .mcpack hoặc .mcaddon, tự tách Behavior Pack và Resource Pack, rồi duyệt cây thư mục có thể thu gọn. Tạo, đổi tên, di chuyển, xóa và đánh dấu tệp yêu thích ngay trong dự án.":"Import .mcpack or .mcaddon files, separate Behavior and Resource Packs, and browse a collapsible file tree. Create, rename, move, delete, and favorite files in your project.",
     "Nhập pack có bảo vệ zip-slip":"Safer archive imports with Zip Slip protection","Cây tệp thu gọn và yêu thích":"Collapsible file tree and favorites","Tạo, đổi tên, di chuyển và xóa tệp":"Create, rename, move, and delete files",
     "Đang chọn":"Selected file","Nhấn vào tệp để đổi lựa chọn minh họa.":"Select a file to change this preview.",
-    "02 / CHỈNH SỬA":"02 / EDITING","Mã nguồn dễ đọc hơn.":"Code that is easier to read.",
+    "CHỈNH SỬA":"EDITING","Mã nguồn dễ đọc hơn.":"Code that is easier to read.",
     "Trình soạn thảo hỗ trợ tô màu cú pháp cho JSON, JavaScript và .mcfunction, nhiều tab, hoàn tác/làm lại, tìm trong tệp, tự lưu và định dạng JSON có giữ comment.":"The editor provides syntax highlighting for JSON, JavaScript, and .mcfunction, plus multiple tabs, undo/redo, find-in-file, autosave, and JSON formatting that preserves comments.",
     "Chuyển tab không mất mạch làm việc":"Switch tabs without losing your place","Undo / redo và tìm nội dung":"Undo / redo and find text","Định dạng JSON giữ comment":"Format JSON while preserving comments","Mô phỏng trình soạn thảo":"Editor preview",
-    "03 / CẤU HÌNH PACK":"03 / PACK DETAILS","Đọc manifest có ngữ cảnh.":"Understand your manifest.",
+    "CẤU HÌNH PACK":"PACK DETAILS","Đọc manifest có ngữ cảnh.":"Understand your manifest.",
     "Xem UUID, module và dependency trong manifest để hiểu pack đang khai báo những gì. Sao lưu và khôi phục dự án khi cần, trước khi xuất bản thử nghiệm.":"Inspect UUIDs, modules, and dependencies declared in the manifest. Back up and restore your project before testing an export.",
     "Thông tin header và module":"Header and module details","UUID và dependency":"UUIDs and dependencies","Sao lưu / khôi phục cục bộ":"Local backup and restore","ĐỌC TỪ TỆP":"READ FROM FILE",
     "Giá trị trên là dữ liệu minh họa, không phải manifest của pack thật.":"Values shown are illustrative, not from a real pack manifest.",
@@ -264,7 +264,7 @@
       button.setAttribute('aria-label', currentLanguage === 'en' ? (next === 'light' ? 'Switch to dark theme' : 'Switch to light theme') : (next === 'light' ? 'Chuyển sang giao diện tối' : 'Chuyển sang giao diện sáng'));
     });
     const themeMeta = document.querySelector('meta[name="theme-color"]');
-    if (themeMeta) themeMeta.content = next === 'light' ? '#f6f7fc' : '#080c18';
+    if (themeMeta) themeMeta.content = next === 'light' ? '#f3f5f8' : '#080b12';
     syncLocalizedControls();
   };
 

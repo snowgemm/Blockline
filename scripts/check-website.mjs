@@ -25,7 +25,7 @@ assert(/assets\/css\/style\.css/.test(html) && /assets\/js\/main\.js/.test(html)
 assert(!/gradient\s*\(|color-mix\s*\(/i.test(css), "Website uses flat colors without gradients or blended overlays");
 assert(!/@keyframes\s+|animation\s*:\s*[^;{}]+;/i.test(css), "CSS has no decorative animations");
 assert(!/\.download-panel::after|\.reveal\s*\{|html\.reveal-ready/.test(css), "Decorative diagonal overlays and scroll-reveal styles are absent");
-assert(/style\.css\?v=20261118-deep-space/.test(html) && /main\.js\?v=20261107-canonical-links/.test(html), "Changed asset URLs bypass stale browser caches");
+assert(/style\.css\?v=20261118-cosmic-layout/.test(html) && /main\.js\?v=20261107-canonical-links/.test(html), "Changed asset URLs bypass stale browser caches");
 assert(!/fonts\.(?:googleapis|gstatic)\.com/.test(html), "Website uses local system fonts rather than decorative remote fonts");
 assert(/href="https:\/\/github\.com\/snowgemm\/Blockline\/releases\/latest"/.test(html), "Latest release page link uses the canonical repository");
 assert(/property="og:url" content="https:\/\/snowgemm\.github\.io\/Blockline\//.test(html) && /rel="canonical" href="https:\/\/snowgemm\.github\.io\/Blockline\//.test(html), "Canonical and Open Graph URLs use the new GitHub Pages owner");
@@ -89,13 +89,14 @@ for (let i = 0; i < css.length; i++) {
   if (braces < 0) break;
 }
 assert(braces === 0 && quote === "" && !comment, "CSS braces, strings, and comments are balanced");
-assert(/name="theme-color" content="#080c18"/i.test(html) && js.includes("#f6f7fc") && js.includes("#080c18"), "Browser theme color matches Deep Space and light themes");
-assert(/assets\/images\/deep-space\.webp/.test(html) && fs.existsSync(path.join(root, "assets/images/deep-space.webp")), "Optimized Deep Space background image is preloaded and present");
-assert(/body::before\s*\{[^}]*deep-space\.webp/s.test(css) && /:root\[data-theme="light"\] body::before\s*\{display:none\}/.test(css), "Dark theme uses the cosmic background while light theme removes it");
-assert(/--accent:#8b9cff/i.test(css) && /--accent-strong:#c3a6ff/i.test(css) && /--accent-cyan:#75d9e8/i.test(css), "Deep Space violet and cyan design tokens are defined");
+assert(/name="theme-color" content="#080b12"/i.test(html) && js.includes("#f3f5f8") && js.includes("#080b12"), "Browser theme color matches the refined dark and light themes");
+assert(/deep-space-hero\.webp/.test(css) && fs.existsSync(path.join(root, "assets/images/deep-space-hero.webp")), "The optimized Deep Space artwork asset exists");
+assert(/\.hero::before\s*\{[^}]*deep-space-hero\.webp/s.test(css) && !/body::before/.test(css), "Cosmic artwork is confined to the hero rather than fixed behind every section");
+assert(/--accent:#a6b5ff/i.test(css) && /--accent-cyan:#80bac7/i.test(css), "The restrained periwinkle and slate-cyan tokens are defined");
 assert(!/--green(?:-bright)?\s*:|var\(--green(?:-bright)?\)/i.test(css), "Legacy green theme tokens are fully removed");
-assert(!/#(?:478f5e|8bb991|3dba7a|8ce0b2|6dbb82|a5dfad|1a2a1e|8fd19b)/i.test(css), "Legacy green accent colors are absent from the stylesheet");
-assert(/#8b9cff/i.test(favicon) && /#75d9e8/i.test(favicon), "Favicon uses the Deep Space palette");
+assert(!/#(?:478f5e|8bb991|3dba7a|8ce0b2|6dbb82|a5dfad|1a2a1e|8fd19b|8b9cff|c3a6ff|75d9e8)/i.test(css), "Previous green and over-saturated cosmic accents are absent");
+assert(!/\.manifesto\b/.test(html) && !/01 \/ CẤU TRÚC|02 \/ CHỈNH SỬA|03 \/ CẤU HÌNH PACK/.test(html), "Redundant manifesto block and decorative feature numbering are removed");
+assert(/#a6b5ff/i.test(favicon) && /#80bac7/i.test(favicon), "Favicon follows the refined Blockline palette");
 if (errors.length) {
   console.error(`Website checks failed: ${errors.length} error(s)`);
   errors.forEach((error) => console.error("✗ " + error));
