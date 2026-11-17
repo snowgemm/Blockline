@@ -264,7 +264,7 @@
       button.setAttribute('aria-label', currentLanguage === 'en' ? (next === 'light' ? 'Switch to dark theme' : 'Switch to light theme') : (next === 'light' ? 'Chuyển sang giao diện tối' : 'Chuyển sang giao diện sáng'));
     });
     const themeMeta = document.querySelector('meta[name="theme-color"]');
-    if (themeMeta) themeMeta.content = next === 'light' ? '#f4f7f2' : '#101612';
+    if (themeMeta) themeMeta.content = next === 'light' ? '#f6f7fc' : '#080c18';
     syncLocalizedControls();
   };
 

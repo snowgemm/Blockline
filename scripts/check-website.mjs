@@ -17,6 +17,7 @@ for (const file of ["README.md", "README.vi.md"]) {
 }
 const css = read("assets/css/style.css");
 const js = read("assets/js/main.js");
+const favicon = read("favicon.svg");
 assert(/<html lang="vi">/.test(html), "HTML declares Vietnamese language");
 assert(/<h1\b/.test(html) && (html.match(/<h1\b/g) || []).length === 1, "Page has exactly one h1");
 assert(/name="description"/.test(html) && /property="og:title"/.test(html), "SEO and Open Graph metadata exist");
@@ -88,6 +89,13 @@ for (let i = 0; i < css.length; i++) {
   if (braces < 0) break;
 }
 assert(braces === 0 && quote === "" && !comment, "CSS braces, strings, and comments are balanced");
+assert(/name="theme-color" content="#080c18"/i.test(html) && js.includes("#f6f7fc") && js.includes("#080c18"), "Browser theme color matches Deep Space and light themes");
+assert(/assets\/images\/deep-space\.webp/.test(html) && fs.existsSync(path.join(root, "assets/images/deep-space.webp")), "Optimized Deep Space background image is preloaded and present");
+assert(/body::before\s*\{[^}]*deep-space\.webp/s.test(css) && /:root\[data-theme="light"\] body::before\s*\{display:none\}/.test(css), "Dark theme uses the cosmic background while light theme removes it");
+assert(/--accent:#8b9cff/i.test(css) && /--accent-strong:#c3a6ff/i.test(css) && /--accent-cyan:#75d9e8/i.test(css), "Deep Space violet and cyan design tokens are defined");
+assert(!/--green(?:-bright)?\s*:|var\(--green(?:-bright)?\)/i.test(css), "Legacy green theme tokens are fully removed");
+assert(!/#(?:478f5e|8bb991|3dba7a|8ce0b2|6dbb82|a5dfad|1a2a1e|8fd19b)/i.test(css), "Legacy green accent colors are absent from the stylesheet");
+assert(/#8b9cff/i.test(favicon) && /#75d9e8/i.test(favicon), "Favicon uses the Deep Space palette");
 if (errors.length) {
   console.error(`Website checks failed: ${errors.length} error(s)`);
   errors.forEach((error) => console.error("✗ " + error));
