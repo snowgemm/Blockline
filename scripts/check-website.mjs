@@ -37,7 +37,8 @@ assert(/<h1\b/.test(html) && (html.match(/<h1\b/g) || []).length === 1, "Page ha
 assert(/name="description"/.test(html) && /property="og:title"/.test(html), "SEO and Open Graph metadata exist");
 assert(/assets\/css\/style\.css/.test(html) && /assets\/js\/main\.js/.test(html), "External CSS and deferred JavaScript are linked");
 assert(!/gradient\s*\(|color-mix\s*\(/i.test(css), "Website uses flat colors without gradients or blended overlays");
-assert(!/@keyframes\s+|animation\s*:\s*[^;{}]+;/i.test(css), "CSS has no decorative animations");
+assert(/@keyframes\s+code-cursor-blink/.test(css) && /\.cursor\{[^}]*animation:code-cursor-blink/.test(css), "The code preview cursor blinks to simulate live editing");
+assert(/prefers-reduced-motion:\s*reduce[\s\S]*?\.cursor\{animation:none;visibility:visible\}/.test(css), "The code cursor respects reduced-motion preferences");
 assert(!/\.download-panel::after|\.reveal\s*\{|html\.reveal-ready/.test(css), "Decorative diagonal overlays and scroll-reveal styles are absent");
 assert(/style\.css\?v=20261118-deep-blue-code-green/.test(html) && /main\.js\?v=20261118-deep-blue-theme/.test(html), "Changed asset URLs bypass stale browser caches");
 assert(!/fonts\.(?:googleapis|gstatic)\.com/.test(html), "Website uses local system fonts rather than decorative remote fonts");
