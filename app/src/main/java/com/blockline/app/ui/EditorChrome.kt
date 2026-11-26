@@ -1,5 +1,10 @@
 package com.blockline.app.ui
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.snap
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -97,17 +102,33 @@ private fun ActivityBarButton(
     onClick: () -> Unit,
     tokens: EditorTokens
 ) {
+    val motionEnabled = rememberSystemAnimationsEnabled()
+    val indicatorWidth by animateDpAsState(
+        targetValue = if (selected) 4.dp else 3.dp,
+        animationSpec = if (motionEnabled) tween(140, easing = FastOutSlowInEasing) else snap(),
+        label = "activity-bar-indicator-width",
+    )
+    val indicatorColor by animateColorAsState(
+        targetValue = if (selected) tokens.statusBar else Color.Transparent,
+        animationSpec = if (motionEnabled) tween(140, easing = FastOutSlowInEasing) else snap(),
+        label = "activity-bar-indicator-color",
+    )
+    val iconTint by animateColorAsState(
+        targetValue = if (selected) tokens.foreground else tokens.muted,
+        animationSpec = if (motionEnabled) tween(140, easing = FastOutSlowInEasing) else snap(),
+        label = "activity-bar-icon-tint",
+    )
     Row(
         modifier = Modifier.fillMaxWidth().heightIn(min = 52.dp)
             .semantics { contentDescription = description },
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Box(Modifier.width(if (selected) 4.dp else 3.dp).height(28.dp).background(if (selected) tokens.statusBar else Color.Transparent))
+        Box(Modifier.width(indicatorWidth).height(28.dp).background(indicatorColor))
         Box(
             Modifier.weight(1f).height(52.dp).clickable(onClick = onClick),
             contentAlignment = Alignment.Center
         ) {
-            Icon(icon, contentDescription = description, tint = if (selected) tokens.foreground else tokens.muted, modifier = Modifier.size(23.dp))
+            Icon(icon, contentDescription = description, tint = iconTint, modifier = Modifier.size(23.dp))
         }
     }
 }
@@ -123,6 +144,7 @@ fun EditorSidebar(
     onClickSound: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
+    val motionEnabled = rememberSystemAnimationsEnabled()
     Column(
         modifier.width(210.dp).fillMaxHeight().background(tokens.sidebarBackground)
             .border(1.dp, tokens.divider, RectangleShape).then(modifier)
@@ -138,13 +160,20 @@ fun EditorSidebar(
         LazyColumn(Modifier.fillMaxWidth().weight(1f)) {
             items(items, key = { it }) { path ->
                 val active = path == selectedPath
+                val selectionBackground by animateColorAsState(
+                    targetValue = if (active) tokens.selection else Color.Transparent,
+                    animationSpec = if (motionEnabled) tween(140, easing = FastOutSlowInEasing) else snap(),
+                    label = "explorer-selection-background",
+                )
+                val selectionBorder by animateColorAsState(
+                    targetValue = if (active && gameEffectsEnabled) tokens.statusBar else Color.Transparent,
+                    animationSpec = if (motionEnabled) tween(140, easing = FastOutSlowInEasing) else snap(),
+                    label = "explorer-selection-border",
+                )
                 Row(
                     Modifier.fillMaxWidth().heightIn(min = 40.dp)
-                        .background(if (active) tokens.selection else Color.Transparent)
-                        .then(
-                            if (active && gameEffectsEnabled) Modifier.border(1.dp, tokens.statusBar, RectangleShape)
-                            else Modifier
-                        )
+                        .background(selectionBackground)
+                        .border(1.dp, selectionBorder, RectangleShape)
                         .clickable { onClickSound(); onSelect(path) }
                         .padding(horizontal = 9.dp, vertical = 8.dp)
                         .semantics { contentDescription = path },
